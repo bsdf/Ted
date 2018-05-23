@@ -1,0 +1,49 @@
+#   ifndef	TEXT_ENCODING_CONFIG_H
+#   define	TEXT_ENCODING_CONFIG_H
+
+/* Define to empty if the keyword does not work.  */
+#undef const
+
+/* Define if you have the ANSI C header files.  */
+#undef STDC_HEADERS
+
+/* Define if your processor stores words with the most significant
+   byte first (like Motorola and SPARC, unlike Intel and VAX).  */
+#undef WORDS_BIGENDIAN
+
+/************************************************************************/
+/*									*/
+/*  Determine what kind of integers we have.				*/
+/*									*/
+/************************************************************************/
+
+#undef SIZEOF_SHORT
+#undef SIZEOF_INT
+#undef SIZEOF_LONG
+#undef SIZEOF_UNSIGNED_SHORT
+#undef SIZEOF_UNSIGNED_INT
+#undef SIZEOF_UNSIGNED_LONG
+
+#   if SIZEOF_UNSIGNED_SHORT == 2
+	typedef unsigned short	UtilUint16;
+#   else
+#	if SIZEOF_UNSIGNED_INT == 2
+	typedef unsigned int	UtilUint16;
+#	else
+	What else can be a 16 bit integer?
+#	endif
+#   endif
+
+#   if SIZEOF_UNSIGNED_INT == 4
+	typedef unsigned int	UtilUint32;
+#   else
+#	if SIZEOF_UNSIGNED_LONG == 4
+	typedef unsigned long	UtilUint32;
+#	else
+	What else can be a 32 bit integer?
+#	endif
+#   endif
+
+#undef HAVE_ICONV
+
+#   endif	/*  TEXT_ENCODING_CONFIG_H  */

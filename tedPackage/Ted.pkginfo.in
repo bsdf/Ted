@@ -1,0 +1,7 @@
+PKG=Ted
+NAME=Ted an Easy Rich Text Processor
+ARCH=@MACHINE@
+VERSION=2.23
+CATEGORY=application
+VENDOR=Mark de Does, http://www.mdedoes.com
+BASEDIR=@PREFIX@

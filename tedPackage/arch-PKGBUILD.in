@@ -1,0 +1,42 @@
+# $Id$
+# Original Maintainer: Sergej Pupykin <pupykin.s+arch@gmail.com>
+# Author of this example file: Mark de Does <mark@mdedoes.com>
+
+#
+# To manually test a build from source:
+# - Install prerequisites: pacman -S base-devel $depends
+# - Make a directory src
+# - Extract the Ted-2.23.src.tar.gz in the src directory
+# - Run the srcipt src/Ted-2.23/tedPackage/arch-pkg.sh
+#   make tedPackage/arch-PKGBUILD
+# - In the directory that holds the src subdirectory call:
+#   sh src/Ted-2.23/tedPackage/arch-pkg.sh
+# - To validate the package call: (First call pacman -S namcap)
+#   namcap ted-2.23-1-@ARCH@.pkg.tar.xz
+# - To install call:
+#   sudo pacman -U ted-2.23-1-@ARCH@.pkg.tar.xz
+#
+
+pkgname=ted
+pkgver=2.23
+pkgrel=1
+pkgdesc="An easy rich text processor"
+arch=('i686' 'x86_64')
+url="http://www.nllgg.nl/Ted/"
+depends=('zlib' 'pcre' 'libxpm' 'libjpeg' 'libtiff' 'libpng' 'gtk2' 'libpaper' 'desktop-file-utils')
+license=('GPL')
+source=(ftp://ftp.nluug.nl/pub/editors/$pkgname/$pkgname-$pkgver.src.tar.gz)
+md5sums=('08162c9164dfdde1d46e41ae64df16be')
+
+build() {
+  cd "$srcdir/Ted-$pkgver"
+  make -j1
+  make -j1 package
+}
+
+package() {
+  cd "$srcdir/Ted-$pkgver/tedPackage"
+  DESTDIR=$pkgdir make -j1 install
+}
+
+install=arch-Ted.install

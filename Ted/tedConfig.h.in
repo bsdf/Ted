@@ -1,0 +1,69 @@
+#   ifndef TED_CONFIG_H
+#   define TED_CONFIG_H
+
+/* Define to empty if the keyword does not work.  */
+#undef const
+
+#undef STDC_HEADERS
+
+#undef WORDS_BIGENDIAN
+
+#undef HAVE_SOCKET
+#undef HAVE_STRERROR
+#undef HAVE_UNAME
+#undef HAVE_FCNTL_H
+#undef HAVE_SYS_TIME_H
+#undef HAVE_UNISTD_H
+
+#   undef	MY_PLATFORM
+#   undef	MY_HOST_DATE
+#   undef	MY_RELEASE
+
+#if 0
+/* Irrelevant: only used via appFrame */
+#undef HAVE_FT2
+#undef HAVE_XFT
+#undef HAVE_FONTCONFIG
+#endif
+
+# include <appFrameConfig.h>
+
+/************************************************************************/
+/*									*/
+/*  Locations of application related files				*/
+/*									*/
+/*  DOCUMENT_DIR:	Location of the manual file.			*/
+/*  PSSCRIPT_DIR:	Location of postscript jobs for configuration.	*/
+/*									*/
+/************************************************************************/
+
+#   undef	DATADIR
+
+#   ifdef	DATADIR
+#	define	PKGDIR	DATADIR
+#   endif
+
+#   ifndef	PKGDIR
+#	define	PKGDIR	"/usr/share"
+#   endif
+
+#   ifndef	DOCUMENT_DIR
+#	define	DOCUMENT_DIR	PKGDIR "/Ted"
+#   endif
+#   ifndef	PSSCRIPT_DIR
+#	define	PSSCRIPT_DIR	PKGDIR "/Ted/ps"
+#   endif
+#   ifndef	FONT_TPL_DIR
+#	define	FONT_TPL_DIR	PKGDIR "/Ted/fontsdocs"
+#   endif
+
+/************************************************************************/
+/*									*/
+/*  Choose a GUI. (only one!)						*/
+/*									*/
+/************************************************************************/
+
+#   undef	USE_MOTIF
+#   undef	USE_GTK
+
+#   endif	/*	TED_CONFIG_H	*/

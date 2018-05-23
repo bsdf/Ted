@@ -1,0 +1,238 @@
+########################################################################
+#
+#		Platform for distribution
+SYSTEM=		@M_SYSTEM@
+MACHINE=	@M_MACHINE@
+ARCH=		@M_ARCH@
+PLATFORM=	@M_PLATFORM@
+DATADIR=	@Q_DATADIR@
+#
+#		Location for distribution
+PREFIX=		@PREFIX@
+
+#
+#		Name of the binary arrchive
+VERSION=	2.23
+BINDIST=	ted-2.23-$(PLATFORM)
+TGZ=		$(BINDIST).tar.gz
+#
+#
+PKG_OWNER=	@M_PKG_OWNER@
+PKG_GROUP=	@M_PKG_GROUP@
+CHOWN_ARG=	@M_CHOWN_ARG@
+CHOWN_CMD=	@CHOWN_CMD@
+CHECK_ID_CMD=	@CHECK_ID_CMD@
+#
+#
+PKGDESTDIR=	./scratch
+PKGPREFIX=	$(PKGDESTDIR)@Q_PREFIX@
+PKGEXEC_PREFIX=	$(PKGDESTDIR)@Q_EXEC_PREFIX@
+PKGDATADIR=	$(PKGDESTDIR)@Q_DATADIR@
+PKGBINDIR=	$(PKGDESTDIR)@Q_BINDIR@
+PKGMANDIR=	$(PKGDATADIR)/man/man1
+
+PKGEXEC_BIN=	$(PKGBINDIR)/Ted
+
+PKGDESKTOPDIR=	$(PKGDATADIR)/applications
+PKGTEDDIR=	$(PKGDATADIR)/Ted
+PKGTEDVARIADIR=	$(PKGTEDDIR)/varia
+
+PKGDIRS=	$(PKGDESTDIR) \
+		$(PKGPREFIX) \
+		$(PKGEXEC_PREFIX) \
+		$(PKGBINDIR) \
+		$(PKGDATADIR) \
+		$(PKGDESKTOPDIR) \
+		$(PKGTEDDIR) \
+		$(PKGTEDVARIADIR)
+
+PKGREADMEFILE=	$(PKGTEDVARIADIR)/README
+
+PKGLSMNAME=	ted-$(VERSION).lsm
+
+###
+###    Data diles needed to build a package
+###    (Besides the executable)
+###
+PKGDATAFILES=	TedDatadir.tar \
+		$(PKGLSMNAME) \
+		Ted.desktop \
+		README
+
+CUSTOMISED_FILES= \
+		$(PKGTEDVARIADIR)/$(PKGLSMNAME)	\
+		$(PKGREADMEFILE)		\
+		$(PKGDESKTOPDIR)/Ted.desktop	\
+		$(PKGTEDVARIADIR)/Ted.desktop
+
+CUSTOMIZE_ARGS=	"$(SYSTEM)"		\
+		"$(MACHINE)"		\
+		"$(ARCH)"		\
+		"$(PLATFORM)"		\
+		"$(BINDIST)"		\
+		"$(PREFIX)"		\
+		"$(DATADIR)"		\
+		"$(PKG_OWNER)"		\
+		"$(PKG_GROUP)"
+
+########################################################################
+
+package: ../Ted/Ted.static $(PKGDATAFILES)
+	:
+	@CHECK_ID_CMD@
+	:
+	rm -rf $(PKGDESTDIR)
+	make datadir
+	:
+	make distfiles
+	:
+	rm -rf $(PKGDESTDIR)
+	@date >> package
+	@echo Distribution is complete
+
+########################################################################
+#
+#	Package containing a dynamically linked executable
+#
+########################################################################
+
+package.shared:	../Ted/Ted $(PKGDATAFILES)
+	:
+	@CHECK_ID_CMD@
+	:
+	rm -rf $(PKGDESTDIR)
+	make datadir
+	:
+	make distfiles
+	:
+	rm -rf $(PKGDESTDIR)
+	@date > package.shared
+	@echo Distribution is complete
+
+########################################################################
+
+install: # run as a script
+	cat $(TGZ) | ( DESTDIR=$${DESTDIR:-/} && cd $${DESTDIR} && umask 0 && tar xvfz - )
+
+########################################################################
+#
+#	- Systen V (Solaris) type pkgadd package.
+#	- Debian style package to be used with dpkg and/or apt-get.
+#	- BSD package to be used with pkg_add etc (Experimental)
+#	- Puppy Linux pet package
+#
+########################################################################
+
+sysvpkg:	$(TGZ)			\
+		Ted.pkginfo.in		\
+		Ted.prototype.in	\
+		sysvpkg.sh		\
+		README
+	sh ./sysvpkg.sh $(CUSTOMIZE_ARGS)
+
+deb:		$(TGZ)			\
+		debian-control.in	\
+		debian-copyright.in	\
+		debian-changelog	\
+		deb.sh			\
+		README
+	sh ./deb.sh $(CUSTOMIZE_ARGS)
+
+freebsdpkg:	$(TGZ)			\
+		freebsd-pkglist.in	\
+		freebsdpkg.sh		\
+		README
+	sh ./freebsdpkg.sh $(CUSTOMIZE_ARGS)
+
+pet:		$(TGZ)			\
+		pet.specs.in		\
+		pet.sh			\
+		README
+	sh ./pet.sh $(CUSTOMIZE_ARGS)
+
+slackpkg:	$(TGZ)			\
+		slack-desc.in		\
+		slackpkg.sh		\
+		README
+	sh ./slackpkg.sh $(CUSTOMIZE_ARGS)
+
+private:	Ted.desktop.in		\
+		private.sh		\
+		TedDatadir.tar
+	sh ./private.sh $(CUSTOMIZE_ARGS)
+
+########################################################################
+#
+#	Various files used in the package
+#
+########################################################################
+
+Ted.desktop: Ted.desktop.in customize.sh
+	sh ./customize.sh $(CUSTOMIZE_ARGS) < Ted.desktop.in > $@
+
+$(PKGLSMNAME): TedBindist.lsm.in customize.sh
+	sh ./customize.sh $(CUSTOMIZE_ARGS) < TedBindist.lsm.in > $@
+
+README: README.in customize.sh
+	sh ./customize.sh $(CUSTOMIZE_ARGS) < README.in > $@
+
+arch-PKGBUILD: arch-PKGBUILD.in customize.sh
+	sh ./customize.sh $(CUSTOMIZE_ARGS) < arch-PKGBUILD.in > $@
+
+########################################################################
+
+# behaves like a script
+datadir:	README		\
+		$(PKGLSMNAME)	\
+		Ted.desktop	\
+		TedDatadir.tar
+	:
+	mkdir -p $(PKGDIRS)
+	$(CHOWN_CMD) $(PKGDIRS)
+	chmod 755 $(PKGDIRS)
+	:
+	( cd $(PKGDATADIR)/Ted && umask 0 && tar xvf - ) < TedDatadir.tar
+	cp $(PKGDATADIR)/Ted/TedDocument-en_US.rtf TedDocument-en_US.rtf
+	( umask 022 && mkdir -p $(PKGMANDIR) )
+	sh ./customize.sh $(CUSTOMIZE_ARGS) < $(PKGDATADIR)/Ted/doc/Ted.1 | \
+					    gzip -9 > $(PKGMANDIR)/Ted.1.gz
+	chmod 644 $(PKGMANDIR)/Ted.1.gz
+	:
+	cp $(PKGLSMNAME) $(PKGTEDVARIADIR)/$(PKGLSMNAME)
+	cp Ted.desktop $(PKGDESKTOPDIR)/Ted.desktop
+	cp Ted.desktop $(PKGTEDVARIADIR)/Ted.desktop
+	cp README $(PKGREADMEFILE)
+	$(CHOWN_CMD) $(CUSTOMISED_FILES)
+	chmod 644 $(CUSTOMISED_FILES)
+
+$(PKGEXEC_BIN): ../Ted/Ted.static
+	ls -l ../Ted/Ted.static
+	mkdir -p $(PKGEXEC_PREFIX)/bin
+	chmod 755 $(PKGEXEC_PREFIX)/bin
+	$(CHOWN_CMD) $(PKGEXEC_PREFIX)/bin
+	cp ../Ted/Ted.static $@
+
+$(TGZ): $(PKGEXEC_BIN)
+	strip $(PKGEXEC_BIN)
+	$(CHOWN_CMD) $(PKGEXEC_BIN)
+	chmod 755 $(PKGEXEC_BIN)
+	:
+	make datadir
+	:
+	( cd $(PKGDESTDIR) && tar cvf - @TAR_CHOWN_ARGS@ * | gzip -9 ) > $(TGZ)
+
+# behaves like a script
+distfiles: $(TGZ) README TedDocument-en_US.rtf
+	$(CHOWN_CMD) README
+	$(CHOWN_CMD) TedDocument-en_US.rtf
+	$(CHOWN_CMD) $(TGZ)
+	:
+	test x_$$RPM_BUILD_ROOT != x_ || chmod 644 README
+	test x_$$RPM_BUILD_ROOT != x_ || chmod 644 TedDocument-en_US.rtf
+	test x_$$RPM_BUILD_ROOT != x_ || chmod 644 $(TGZ)
+	:
+	@echo Checking existence of distribution files
+	test -s README
+	test -s TedDocument-en_US.rtf
+	test -s $(TGZ)
+

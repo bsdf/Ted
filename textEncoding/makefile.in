@@ -1,0 +1,358 @@
+CC=@CC@
+ICONV_CFLAGS=@ICONV_CFLAGS@
+
+INCLUDES=			\
+	$(ICONV_CFLAGS)		\
+	-I../include		\
+	-I../appUtil		\
+	-I.
+
+CFLAGS=	@CFLAGS@ 	\
+	$(INCLUDES)
+
+WFLAGS=	-Wall			\
+	-Wextra			\
+	-Winit-self		\
+	-pedantic		\
+	-Wpointer-arith		\
+	-Wno-format-y2k		\
+	-Wstrict-prototypes	\
+	-Wmissing-declarations	\
+	-Wmissing-prototypes	\
+	-Wnested-externs	\
+	-Wuninitialized		\
+	-Wundef			\
+	-Wwrite-strings		\
+	-Wold-style-definition	\
+	-Wno-missing-field-initializers	\
+	-Wredundant-decls	\
+	-Wno-unused-parameter	\
+	-Wno-sign-compare
+
+#CFLAGS	= $(WFLAGS) -g -O2 $(INCLUDES)
+
+# 47!!obs
+OBS	=	\
+		uniWinCp874GlyphUnicodes.o\
+		uniWinCp1258GlyphUnicodes.o\
+		uniWinCp1257GlyphUnicodes.o\
+		uniWinCp1256GlyphUnicodes.o\
+		uniWinCp1255GlyphUnicodes.o\
+		uniWinCp1254GlyphUnicodes.o\
+		uniWinCp1253GlyphUnicodes.o\
+		uniWinCp1252GlyphUnicodes.o\
+		uniWinCp1251GlyphUnicodes.o\
+		uniWinCp1250GlyphUnicodes.o\
+		uniUtf8.o\
+		uniSymbolGlyphUnicodes.o\
+		uniShiftUtf8.o\
+		uniPDFDocEncodingGlyphUnicodes.o\
+		uniMacRomanGlyphUnicodes.o\
+		uniLegacyMapping.o\
+		uniKoi8RGlyphUnicodes.o\
+		uniIso8859_9GlyphUnicodes.o\
+		uniIso8859_7GlyphUnicodes.o\
+		uniIso8859_5GlyphUnicodes.o\
+		uniIso8859_2GlyphUnicodes.o\
+		uniIso8859_1GlyphUnicodes.o\
+		uniIso8859_15GlyphUnicodes.o\
+		uniIso8859_13GlyphUnicodes.o\
+		uniDingbatsGlyphUnicodes.o\
+		uniAlternatives.o\
+		ucdToUpper.o\
+		ucdToMirror.o\
+		ucdToLower.o\
+		ucdSymbolClass.o\
+		ucdMapSymbol.o\
+		ucdGeneralCategory.o\
+		ucdBlock.o\
+		ucdBidiClass.o\
+		ucdBaseCharacter.o\
+		textUtf8Util.o\
+		textOfficeCharset.o\
+		textHtmlCharEntities.o\
+		textConverter.o\
+		sioUtf8.o\
+		sioUtf8_16.o\
+		sioIconv.o\
+		bidiTree.o\
+		bidiTreeBuilder.o\
+		bidiEmbedding.o
+
+
+../lib/textEncoding.a:	$(OBS)
+	ar ruv $@ $(OBS) && @RANLIB@ $@
+
+#
+#  Check for duplicate symbols
+#
+duplicates:
+	nm *.o | grep -w [Tt] | \
+	while read addr t name; do echo $$name; done | sort | uniq -c | sort -n
+
+includes:
+	includes.sh textEncodingConfig.h $(INCLUDES)
+
+#
+#  This is cyclic, but at least it documents what extra autoconf configuration
+#  is used in this directory:
+#
+ACLOCAL=				\
+	../configure/iconv.m4
+
+aclocal.m4:	$(ACLOCAL)
+	cat $(ACLOCAL) > $@
+
+# deps -I../include -I../appUtil
+################################# !! sh
+
+bidiEmbedding.o: \
+    bidiEmbedding.c \
+    textEncodingConfig.h \
+    bidiEmbedding.h
+
+bidiTree.o: \
+    bidiTree.c \
+    textEncodingConfig.h \
+    bidiTree.h \
+    bidiEmbedding.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+bidiTreeBuilder.o: \
+    bidiTreeBuilder.c \
+    textEncodingConfig.h \
+    bidiTreeBuilder.h \
+    bidiTree.h \
+    bidiEmbedding.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+sioIconv.o: \
+    sioIconv.c \
+    textEncodingConfig.h \
+    sioIconv.h \
+    ../appUtil/sioGeneral.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+sioUtf8.o: \
+    sioUtf8.c \
+    textEncodingConfig.h \
+    sioUtf8.h \
+    ../appUtil/sioGeneral.h \
+    uniUtf8.h \
+    uniUtf8Ranges.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+sioUtf8_16.o: \
+    sioUtf8_16.c \
+    textEncodingConfig.h \
+    sioUtf8_16.h \
+    ../appUtil/sioGeneral.h \
+    uniUtf8.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+textConverter.o: \
+    textConverter.c \
+    textEncodingConfig.h \
+    uniUtf8.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    textConverter.h \
+    textConverterImpl.h \
+    ../appUtil/utilIndexMapping.h \
+    uniLegacyEncoding.h \
+    uniLegacyMapping.h \
+    ../appUtil/utilIndexSet.h
+
+textHtmlCharEntities.o: \
+    textHtmlCharEntities.c \
+    textEncodingConfig.h \
+    uniLegacyEncoding.h
+
+textOfficeCharset.o: \
+    textOfficeCharset.c \
+    textEncodingConfig.h \
+    textOfficeCharset.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilIndexSet.h \
+    uniLegacyEncoding.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+textUtf8Util.o: \
+    textUtf8Util.c \
+    textEncodingConfig.h \
+    uniUtf8.h \
+    textUtf8Util.h \
+    ucd.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+ucdBaseCharacter.o: \
+    ucdBaseCharacter.c \
+    ucd.h \
+    ucdIntern.h
+
+ucdBidiClass.o: \
+    ucdBidiClass.c \
+    ucdIntern.h \
+    ucdBidiClass.h
+
+ucdBlock.o: \
+    ucdBlock.c \
+    ucdBlock.h
+
+ucdGeneralCategory.o: \
+    ucdGeneralCategory.c \
+    ucdIntern.h \
+    ucdGeneralCategory.h
+
+ucdMapSymbol.o: \
+    ucdMapSymbol.c \
+    ucdIntern.h
+
+ucdSymbolClass.o: \
+    ucdSymbolClass.c \
+    ucdIntern.h
+
+ucdToLower.o: \
+    ucdToLower.c \
+    ucd.h \
+    ucdIntern.h
+
+ucdToMirror.o: \
+    ucdToMirror.c \
+    ucd.h \
+    ucdIntern.h
+
+ucdToUpper.o: \
+    ucdToUpper.c \
+    ucd.h \
+    ucdIntern.h
+
+uniAlternatives.o: \
+    uniAlternatives.c \
+    textEncodingConfig.h \
+    uniAlternatives.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+uniDingbatsGlyphUnicodes.o: \
+    uniDingbatsGlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniIso8859_13GlyphUnicodes.o: \
+    uniIso8859_13GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniIso8859_15GlyphUnicodes.o: \
+    uniIso8859_15GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniIso8859_1GlyphUnicodes.o: \
+    uniIso8859_1GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniIso8859_2GlyphUnicodes.o: \
+    uniIso8859_2GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniIso8859_5GlyphUnicodes.o: \
+    uniIso8859_5GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniIso8859_7GlyphUnicodes.o: \
+    uniIso8859_7GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniIso8859_9GlyphUnicodes.o: \
+    uniIso8859_9GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniKoi8RGlyphUnicodes.o: \
+    uniKoi8RGlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniLegacyMapping.o: \
+    uniLegacyMapping.c \
+    textEncodingConfig.h \
+    uniLegacyMapping.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilIndexSet.h
+
+uniMacRomanGlyphUnicodes.o: \
+    uniMacRomanGlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniPDFDocEncodingGlyphUnicodes.o: \
+    uniPDFDocEncodingGlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniShiftUtf8.o: \
+    uniShiftUtf8.c \
+    textEncodingConfig.h \
+    ucd.h \
+    uniUtf8.h \
+    uniShiftUtf8.h \
+    ucdGeneralCategory.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+uniSymbolGlyphUnicodes.o: \
+    uniSymbolGlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniUtf8.o: \
+    uniUtf8.c \
+    textEncodingConfig.h \
+    uniUtf8.h \
+    uniUtf8Ranges.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+uniWinCp1250GlyphUnicodes.o: \
+    uniWinCp1250GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp1251GlyphUnicodes.o: \
+    uniWinCp1251GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp1252GlyphUnicodes.o: \
+    uniWinCp1252GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp1253GlyphUnicodes.o: \
+    uniWinCp1253GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp1254GlyphUnicodes.o: \
+    uniWinCp1254GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp1255GlyphUnicodes.o: \
+    uniWinCp1255GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp1256GlyphUnicodes.o: \
+    uniWinCp1256GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp1257GlyphUnicodes.o: \
+    uniWinCp1257GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp1258GlyphUnicodes.o: \
+    uniWinCp1258GlyphUnicodes.c \
+    uniLegacyEncoding.h
+
+uniWinCp874GlyphUnicodes.o: \
+    uniWinCp874GlyphUnicodes.c \
+    uniLegacyEncoding.h
+

@@ -1,0 +1,129 @@
+@name ted
+@comment @display Ted, An easy rich text processor
+@comment Maintainer: Mark de Does <mark@mdedoes.com>
+@comment Version: 2.23
+
+@comment use pkg_info -E -x '.*tiff.*' to find dependencies
+@pkgdep @PCRE_VERSION@
+@pkgdep @X11_VERSION@
+@pkgdep @XPM_VERSION@
+@pkgdep @TIFF_VERSION@
+@pkgdep @JPEG_VERSION@
+@pkgdep @PNG_VERSION@
+@pkgdep @GTK_VERSION@
+@comment @pkgdep zlib1g
+
+@comment Motif @pkgdep zlib1g
+@comment Motif @pkgdep libpcre3
+@comment Motif @pkgdep libx11-6
+@comment Motif @pkgdep libxpm4
+@comment Motif @pkgdep libtiff4
+@comment Motif @pkgdep libjpeg
+@comment Motif @pkgdep libpng12-0
+@comment Motif @pkgdep libxft2
+@comment Motif @pkgdep libxt6
+@comment Motif @pkgdep libxp6
+@comment Motif @pkgdep libxmu6
+@comment Motif @pkgdep libmotif3
+
+@cwd @PREFIX@
+
+@owner @PKG_OWNER@
+@group @PKG_GROUP@
+
+@mode 644
+share/applications/Ted.desktop
+share/man/man1/Ted.1.gz
+
+@mode 755
+bin/Ted
+
+@mode 644
+share/Ted/afm/AvantGarde-Book.afm
+share/Ted/afm/AvantGarde-BookOblique.afm
+share/Ted/afm/AvantGarde-Demi.afm
+share/Ted/afm/AvantGarde-DemiOblique.afm
+share/Ted/afm/Bookman-Demi.afm
+share/Ted/afm/Bookman-DemiItalic.afm
+share/Ted/afm/Bookman-Light.afm
+share/Ted/afm/Bookman-LightItalic.afm
+share/Ted/afm/Courier.afm
+share/Ted/afm/Courier-Bold.afm
+share/Ted/afm/Courier-BoldOblique.afm
+share/Ted/afm/Courier-Oblique.afm
+share/Ted/afm/Helvetica.afm
+share/Ted/afm/Helvetica-Bold.afm
+share/Ted/afm/Helvetica-BoldOblique.afm
+share/Ted/afm/Helvetica-Narrow.afm
+share/Ted/afm/Helvetica-Narrow-Bold.afm
+share/Ted/afm/Helvetica-Narrow-BoldOblique.afm
+share/Ted/afm/Helvetica-Narrow-Oblique.afm
+share/Ted/afm/Helvetica-Oblique.afm
+share/Ted/afm/NewCenturySchlbk-Bold.afm
+share/Ted/afm/NewCenturySchlbk-BoldItalic.afm
+share/Ted/afm/NewCenturySchlbk-Italic.afm
+share/Ted/afm/NewCenturySchlbk-Roman.afm
+share/Ted/afm/Palatino-Bold.afm
+share/Ted/afm/Palatino-BoldItalic.afm
+share/Ted/afm/Palatino-Italic.afm
+share/Ted/afm/Palatino-Roman.afm
+share/Ted/afm/Symbol.afm
+share/Ted/afm/Times-Bold.afm
+share/Ted/afm/Times-BoldItalic.afm
+share/Ted/afm/Times-Italic.afm
+share/Ted/afm/Times-Roman.afm
+share/Ted/afm/ZapfChancery-MediumItalic.afm
+share/Ted/afm/ZapfDingbats.afm
+
+share/Ted/dfa/en_US.dfa
+share/Ted/TedDocument-en_US.rtf
+
+@mode 755
+share/Ted/examples/rtf2ps.sh
+share/Ted/examples/rtf2pdf.sh
+share/Ted/examples/rtf2txt.sh
+share/Ted/examples/rtf2html.sh
+share/Ted/examples/rtf2epub.sh
+share/Ted/examples/gsafm.sh
+share/Ted/examples/fixOpenOfficeRtf.sh
+
+@mode 644
+share/Ted/doc/Ted.1
+share/Ted/doc/rtf2ps.1
+share/Ted/doc/rtf2pdf.1
+
+share/Ted/ps/gsfontmetrics.ps
+share/Ted/ps/gslibpath.ps
+share/Ted/ps/gslsfonts.ps
+
+share/Ted/fontsdocs/font.rtf
+share/Ted/fontsdocs/font-i.rtf
+share/Ted/fontsdocs/font-b.rtf
+share/Ted/fontsdocs/font-bi.rtf
+@mode 755
+share/Ted/fontsdocs/checkfontsdocs.sh
+
+@mode 644
+share/Ted/Ted.png
+share/Ted/varia/Ted.mailcap
+share/Ted/varia/Ted.desktop
+share/Ted/varia/base35.fonts.conf
+share/Ted/varia/base35.rtf
+share/Ted/varia/ted-2.23.lsm
+share/Ted/varia/README
+
+share/Ted/config/ted.gtkrc-2.0
+share/Ted/config/Ted.properties.sample
+
+@dirrm share/Ted/afm
+@dirrm share/Ted/dfa
+@dirrm share/Ted/varia
+@dirrm share/Ted/config
+@dirrm share/Ted/doc
+@dirrm share/Ted/fontsdocs
+@dirrm share/Ted/examples
+@dirrm share/Ted/ps
+@dirrm share/Ted
+
+@exec update-desktop-database -q || true
+@unexec update-desktop-database -q || true

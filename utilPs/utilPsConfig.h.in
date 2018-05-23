@@ -1,0 +1,6 @@
+#   ifndef	UTIL_PS_CONFIG_H
+#   define	UTIL_PS_CONFIG_H
+
+#   include	<appUtilConfig.h>
+
+#   endif	/*  UTIL_PS_CONFIG_H  */

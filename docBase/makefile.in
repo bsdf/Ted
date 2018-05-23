@@ -1,0 +1,1108 @@
+CC=@CC@
+
+WFLAGS=	-Wall			\
+	-Wextra			\
+	-Winit-self		\
+	-pedantic		\
+	-Wpointer-arith		\
+	-Wno-format-y2k		\
+	-Wstrict-prototypes	\
+	-Wmissing-declarations	\
+	-Wmissing-prototypes	\
+	-Wnested-externs	\
+	-Wuninitialized		\
+	-Wundef			\
+	-Wwrite-strings		\
+	-Wold-style-definition	\
+	-Wno-missing-field-initializers	\
+	-Wredundant-decls	\
+	-Wno-unused-parameter	\
+	-Wno-sign-compare
+
+INCLUDES=			\
+	-I. -I../include	\
+	-I../utilPs		\
+	-I../docFont		\
+	-I../bitmap		\
+	-I../textEncoding	\
+	-I../appUtil
+
+CFLAGS=	\
+	@CFLAGS@		\
+	$(INCLUDES)
+
+#CFLAGS= -g -O2 $(WFLAGS) $(INCLUDES)
+
+# 71!!obs
+OBS	=	\
+		docTreeType.o\
+		docTocField.o\
+		docTextLine.o\
+		docTcField.o\
+		docTabStop.o\
+		docSymbolField.o\
+		docStyleSheet.o\
+		docStyle.o\
+		docStatistics.o\
+		docShapeProperties.o\
+		docShapeDrawing.o\
+		docSeqField.o\
+		docSelectionScope.o\
+		docSectProperties.o\
+		docRowProperties.o\
+		docRefField.o\
+		docReadWmfObject.o\
+		docReadFileObject.o\
+		docReadEpsObject.o\
+		docReadEmfObject.o\
+		docReadBitmapObject.o\
+		docPropertiesAdmin.o\
+		docPictureProperties.o\
+		docParaRulerAdmin.o\
+		docParaProperties.o\
+		docParaNumber.o\
+		docPagerefField.o\
+		docObject.o\
+		docNotesProperties.o\
+		docNoteProperties.o\
+		docMergeField.o\
+		docListTable.o\
+		docListOverrideTable.o\
+		docListOverrideLevel.o\
+		docListOverride.o\
+		docListNumberTree.o\
+		docListLevel.o\
+		docListAdmin.o\
+		docLayoutPosition.o\
+		docItemShading.o\
+		docItemShadingAdmin.o\
+		docInsertedObjectList.o\
+		docIncludePictureField.o\
+		docHyperlinkField.o\
+		docFrameProperties.o\
+		docFramePropertiesAdmin.o\
+		docFormatField.o\
+		docFileNameField.o\
+		docFieldTree.o\
+		docFieldInstructions.o\
+		docFieldGetSet.o\
+		docEditRange.o\
+		docEditPosition.o\
+		docDrawShapeArrow.o\
+		docDocumentProperties.o\
+		docDocumentList.o\
+		docDocumentFieldList.o\
+		docDocumentField.o\
+		docDocumentAttributeMap.o\
+		docDebugListNumberTree.o\
+		docDebugList.o\
+		docDebugFieldInstructions.o\
+		docDateField.o\
+		docCellPropertyAdmin.o\
+		docCellProperties.o\
+		docBorderPropertyAdmin.o\
+		docBorderProperties.o\
+		docBookmarkField.o\
+		docBlockOrnaments.o
+
+../lib/docBase.a:	$(OBS)
+	ar ruv $@ $(OBS) && @RANLIB@ $@
+
+duplicates:
+	nm *.o | grep -w [Tt] | \
+	while read addr t name; do echo $$name; done | sort | uniq -c | sort -n
+
+includes:
+	includes.sh docBaseConfig.h $(INCLUDES)
+
+# deps -I. -I../include -I../textEncoding -I../appUtil -I../bitmap -I ../docFont -I../utilPs
+######################################## !! sh
+
+docBlockOrnaments.o: \
+    docBlockOrnaments.c \
+    docBaseConfig.h \
+    docBlockOrnaments.h \
+    ../appUtil/utilPropMask.h \
+    docBorderProperties.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docItemShading.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docBookmarkField.o: \
+    docBookmarkField.c \
+    docBaseConfig.h \
+    ../textEncoding/uniUtf8.h \
+    ../textEncoding/ucdGeneralCategory.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docBookmarkField.h
+
+docBorderProperties.o: \
+    docBorderProperties.c \
+    docBaseConfig.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docBorderProperties.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilColor.h
+
+docBorderPropertyAdmin.o: \
+    docBorderPropertyAdmin.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docBorderPropertyAdmin.h \
+    docBorderProperties.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilNumberedPropertiesAdmin.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h
+
+docCellProperties.o: \
+    docCellProperties.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docCellProperties.h \
+    docItemShading.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docDocumentAttributeMap.h \
+    docPropVal.h
+
+docCellPropertyAdmin.o: \
+    docCellPropertyAdmin.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docCellPropertyAdmin.h \
+    docCellProperties.h \
+    docItemShading.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docDocumentAttributeMap.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilNumberedPropertiesAdmin.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h
+
+docDateField.o: \
+    docDateField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docDateField.h
+
+docDebugFieldInstructions.o: \
+    docDebugFieldInstructions.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docFieldInstructions.h \
+    ../appUtil/utilMemoryBuffer.h
+
+docDebugList.o: \
+    docDebugList.c \
+    docBaseConfig.h \
+    ../textEncoding/uniUtf8.h \
+    docDebugList.h \
+    docDocumentList.h \
+    docListDepth.h \
+    docListLevel.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    docParaProperties.h \
+    docDocumentAttributeMap.h \
+    docListOverride.h \
+    docListOverrideLevel.h \
+    docListOverrideTable.h \
+    docListTable.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docDebugListNumberTree.o: \
+    docDebugListNumberTree.c \
+    docBaseConfig.h \
+    docDebugListNumberTree.h \
+    docListNumberTree.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docDocumentAttributeMap.o: \
+    docDocumentAttributeMap.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentAttributeMap.h
+
+docDocumentField.o: \
+    docDocumentField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h
+
+docDocumentFieldList.o: \
+    docDocumentFieldList.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentFieldList.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h \
+    docBookmarkField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docDocumentField.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h
+
+docDocumentList.o: \
+    docDocumentList.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentList.h \
+    docListDepth.h \
+    docListLevel.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    docParaProperties.h \
+    docDocumentAttributeMap.h
+
+docDocumentProperties.o: \
+    docDocumentProperties.c \
+    docBaseConfig.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/appUnit.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentProperties.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/utilColor.h \
+    docNotesProperties.h \
+    docListAdmin.h \
+    docListTable.h \
+    docListOverrideTable.h \
+    docDocumentAttributeMap.h
+
+docDrawShapeArrow.o: \
+    docDrawShapeArrow.c \
+    docBaseConfig.h \
+    ../appUtil/geo2DDouble.h \
+    ../appUtil/geoAffineTransform.h \
+    docDrawShapeArrow.h \
+    docShapeDrawing.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/geo2DInteger.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docEditPosition.o: \
+    docEditPosition.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docEditPosition.h
+
+docEditRange.o: \
+    docEditRange.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docEditRange.h \
+    docEditPosition.h
+
+docFieldGetSet.o: \
+    docFieldGetSet.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docFieldFormat.h \
+    docFieldInstructions.h \
+    ../appUtil/utilMemoryBuffer.h
+
+docFieldInstructions.o: \
+    docFieldInstructions.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docFieldInstructions.h \
+    ../appUtil/utilMemoryBuffer.h
+
+docFieldTree.o: \
+    docFieldTree.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h
+
+docFileNameField.o: \
+    docFileNameField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docFileNameField.h
+
+docFormatField.o: \
+    docFormatField.c \
+    docBaseConfig.h \
+    ../appUtil/utilBase26.h \
+    ../appUtil/utilRoman.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docFieldFormat.h
+
+docFrameProperties.o: \
+    docFrameProperties.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docFrameProperties.h \
+    docPropVal.h
+
+docFramePropertiesAdmin.o: \
+    docFramePropertiesAdmin.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docFramePropertiesAdmin.h \
+    docFrameProperties.h \
+    docPropVal.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilNumberedPropertiesAdmin.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h
+
+docHyperlinkField.o: \
+    docHyperlinkField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docHyperlinkField.h
+
+docIncludePictureField.o: \
+    docIncludePictureField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docIncludePictureField.h
+
+docInsertedObjectList.o: \
+    docInsertedObjectList.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docInsertedObjectList.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h \
+    docObject.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/geo2DInteger.h \
+    docLayoutPosition.h \
+    docPictureProperties.h \
+    ../appUtil/utilPropMask.h
+
+docItemShading.o: \
+    docItemShading.c \
+    docBaseConfig.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docItemShading.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilColor.h \
+    ../utilPs/psShading.h
+
+docItemShadingAdmin.o: \
+    docItemShadingAdmin.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docItemShadingAdmin.h \
+    docItemShading.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilNumberedPropertiesAdmin.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h
+
+docLayoutPosition.o: \
+    docLayoutPosition.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docLayoutPosition.h \
+    ../appUtil/geo2DInteger.h
+
+docListAdmin.o: \
+    docListAdmin.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docListAdmin.h \
+    docListTable.h \
+    docListOverrideTable.h \
+    docDocumentList.h \
+    docListDepth.h \
+    docListLevel.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    docParaProperties.h \
+    docDocumentAttributeMap.h \
+    docListOverride.h \
+    docListOverrideLevel.h
+
+docListLevel.o: \
+    docListLevel.c \
+    docBaseConfig.h \
+    ../appUtil/utilBase26.h \
+    ../appUtil/utilRoman.h \
+    ../textEncoding/uniUtf8.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docListLevel.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    docParaProperties.h \
+    docDocumentAttributeMap.h \
+    docParaNumber.h
+
+docListNumberTree.o: \
+    docListNumberTree.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docListNumberTree.h \
+    docListDepth.h \
+    docDebugListNumberTree.h
+
+docListOverride.o: \
+    docListOverride.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docListOverride.h \
+    docListOverrideLevel.h \
+    docListLevel.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    docParaProperties.h \
+    docDocumentAttributeMap.h \
+    docListDepth.h
+
+docListOverrideLevel.o: \
+    docListOverrideLevel.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docListOverrideLevel.h \
+    docListLevel.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    docParaProperties.h \
+    docDocumentAttributeMap.h
+
+docListOverrideTable.o: \
+    docListOverrideTable.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docListOverride.h \
+    docListOverrideLevel.h \
+    docListLevel.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    docParaProperties.h \
+    docDocumentAttributeMap.h \
+    docListDepth.h \
+    docListOverrideTable.h
+
+docListTable.o: \
+    docListTable.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentList.h \
+    docListDepth.h \
+    docListLevel.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    docParaProperties.h \
+    docDocumentAttributeMap.h \
+    docListTable.h
+
+docMergeField.o: \
+    docMergeField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docMergeField.h \
+    docFieldFormat.h
+
+docNoteProperties.o: \
+    docNoteProperties.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/utilPropMask.h \
+    docTreeType.h \
+    docNoteProperties.h \
+    ../appUtil/utilMemoryBuffer.h
+
+docNotesProperties.o: \
+    docNotesProperties.c \
+    docBaseConfig.h \
+    ../appUtil/utilPropMask.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docNotesProperties.h
+
+docObject.o: \
+    docObject.c \
+    docBaseConfig.h \
+    ../appUtil/geoGrid.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docObject.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/geo2DInteger.h \
+    docLayoutPosition.h \
+    docPictureProperties.h \
+    ../appUtil/utilPropMask.h \
+    docObjectProperties.h
+
+docPagerefField.o: \
+    docPagerefField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docPagerefField.h \
+    docFieldFormat.h
+
+docParaNumber.o: \
+    docParaNumber.c \
+    docBaseConfig.h \
+    docParaNumber.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docParaProperties.o: \
+    docParaProperties.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docParaProperties.h \
+    ../appUtil/utilPropMask.h \
+    docDocumentAttributeMap.h \
+    docPropVal.h \
+    docListDepth.h
+
+docParaRulerAdmin.o: \
+    docParaRulerAdmin.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docParaRulerAdmin.h \
+    docTabStop.h \
+    docTabStopList.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilNumberedPropertiesAdmin.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h
+
+docPictureProperties.o: \
+    docPictureProperties.c \
+    docBaseConfig.h \
+    ../appUtil/utilPropMask.h \
+    docObjectProperties.h \
+    docPictureProperties.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docPropertiesAdmin.o: \
+    docPropertiesAdmin.c \
+    docBaseConfig.h \
+    docPropertiesAdmin.h \
+    ../appUtil/utilNumberedPropertiesAdmin.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docListAdmin.h \
+    docListTable.h \
+    docListOverrideTable.h \
+    docBorderPropertyAdmin.h \
+    docBorderProperties.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilIntegerValueNode.h \
+    docItemShadingAdmin.h \
+    docItemShading.h \
+    docFramePropertiesAdmin.h \
+    docFrameProperties.h \
+    docPropVal.h \
+    docParaRulerAdmin.h \
+    docTabStop.h \
+    docTabStopList.h \
+    docCellPropertyAdmin.h \
+    docCellProperties.h \
+    docDocumentAttributeMap.h \
+    ../utilPs/textAttributeAdmin.h \
+    ../utilPs/textAttribute.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docReadBitmapObject.o: \
+    docReadBitmapObject.c \
+    docBaseConfig.h \
+    ../bitmap/bmio.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/sioMemory.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/sioHex.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docObject.h \
+    ../bitmap/bitmap.h \
+    docLayoutPosition.h \
+    docPictureProperties.h \
+    ../appUtil/utilPropMask.h \
+    docObjectProperties.h
+
+docReadEmfObject.o: \
+    docReadEmfObject.c \
+    docBaseConfig.h \
+    ../appUtil/sioMemory.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/sioHex.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../bitmap/bmEmfIo.h \
+    ../bitmap/bmEmf.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geoAffineTransform.h \
+    ../appUtil/geoUnits.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docObject.h \
+    docLayoutPosition.h \
+    docPictureProperties.h \
+    ../appUtil/utilPropMask.h \
+    docObjectProperties.h
+
+docReadEpsObject.o: \
+    docReadEpsObject.c \
+    docBaseConfig.h \
+    ../appUtil/sioMemory.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioHex.h \
+    ../utilPs/psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    ../utilPs/psFace.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    ../utilPs/psNup.h \
+    ../appUtil/utilColor.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    docObject.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docLayoutPosition.h \
+    docPictureProperties.h \
+    docObjectProperties.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docReadFileObject.o: \
+    docReadFileObject.c \
+    docBaseConfig.h \
+    ../appUtil/appSystem.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docObject.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/geo2DInteger.h \
+    docLayoutPosition.h \
+    docPictureProperties.h \
+    ../appUtil/utilPropMask.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docReadWmfObject.o: \
+    docReadWmfObject.c \
+    docBaseConfig.h \
+    ../appUtil/sioMemory.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/sioHex.h \
+    ../appUtil/sioEndian.h \
+    ../bitmap/bmWmfIo.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/sioGeneral.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docObject.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docLayoutPosition.h \
+    docPictureProperties.h \
+    ../appUtil/utilPropMask.h \
+    docObjectProperties.h
+
+docRefField.o: \
+    docRefField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docRefField.h
+
+docRowProperties.o: \
+    docRowProperties.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docRowProperties.h \
+    docCellProperties.h \
+    docItemShading.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docDocumentAttributeMap.h \
+    docPropVal.h
+
+docSectProperties.o: \
+    docSectProperties.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/utilPropMask.h \
+    docPropVal.h \
+    docSectProperties.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    docNotesProperties.h
+
+docSelectionScope.o: \
+    docSelectionScope.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docSelectionScope.h \
+    docTreeType.h
+
+docSeqField.o: \
+    docSeqField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docSeqField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldFormat.h \
+    docFieldInstructions.h \
+    docDocumentField.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h
+
+docShapeDrawing.o: \
+    docShapeDrawing.c \
+    docBaseConfig.h \
+    docPropVal.h \
+    docShapeProp.h \
+    docShapeDrawing.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/geo2DInteger.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docShapeProperties.o: \
+    docShapeProperties.c \
+    docBaseConfig.h \
+    docPropVal.h \
+    docShapeProperties.h \
+    ../appUtil/geo2DInteger.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docStatistics.o: \
+    docStatistics.c \
+    docBaseConfig.h \
+    docStatistics.h
+
+docStyle.o: \
+    docStyle.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docStyle.h \
+    ../appUtil/utilPropMask.h \
+    docSectProperties.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    docNotesProperties.h \
+    docRowProperties.h \
+    docCellProperties.h \
+    docItemShading.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docDocumentAttributeMap.h \
+    docParaProperties.h \
+    docParaNumber.h \
+    ../utilPs/textAttribute.h \
+    docListDepth.h
+
+docStyleSheet.o: \
+    docStyleSheet.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/utilTree.h \
+    docStyleSheet.h \
+    docStyle.h \
+    ../appUtil/utilPropMask.h \
+    docSectProperties.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    docNotesProperties.h \
+    docRowProperties.h \
+    docCellProperties.h \
+    docItemShading.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docDocumentAttributeMap.h \
+    docParaProperties.h \
+    docParaNumber.h \
+    ../utilPs/textAttribute.h \
+    docListDepth.h
+
+docSymbolField.o: \
+    docSymbolField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docSymbolField.h
+
+docTabStop.o: \
+    docTabStop.c \
+    docBaseConfig.h \
+    ../appUtil/geoGrid.h \
+    docTabStop.h \
+    docTabStopList.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+docTcField.o: \
+    docTcField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docDocumentField.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docFieldInstructions.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h
+
+docTextLine.o: \
+    docTextLine.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    docTextLine.h \
+    docLayoutPosition.h \
+    ../appUtil/geo2DInteger.h
+
+docTocField.o: \
+    docTocField.c \
+    docBaseConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/utilRanges.h \
+    docFieldInstructions.h \
+    ../appUtil/utilMemoryBuffer.h \
+    docDocumentField.h \
+    docSelectionScope.h \
+    docEditRange.h \
+    docEditPosition.h \
+    docTocField.h \
+    docListDepth.h \
+    ../appUtil/utilMemoryBufferPrintf.h \
+    ../appUtil/utilMemoryBuffer.h
+
+docTreeType.o: \
+    docTreeType.c \
+    docTreeType.h
+

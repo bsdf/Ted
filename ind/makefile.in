@@ -1,0 +1,246 @@
+CC=@CC@
+
+WFLAGS=	-Wall			\
+	-Wextra			\
+	-Winit-self		\
+	-pedantic		\
+	-Wpointer-arith		\
+	-Wno-format-y2k		\
+	-Wstrict-prototypes	\
+	-Wmissing-declarations	\
+	-Wmissing-prototypes	\
+	-Wnested-externs	\
+	-Wuninitialized		\
+	-Wundef			\
+	-Wwrite-strings		\
+	-Wold-style-definition	\
+	-Wno-missing-field-initializers	\
+	-Wredundant-decls	\
+	-Wno-unused-parameter	\
+	-Wno-sign-compare
+
+INCLUDES=			\
+	    -I.			\
+	    -I../textEncoding	\
+	    -I../appUtil	\
+	    -I../include
+
+CFLAGS=				\
+	    @CFLAGS@ 		\
+	    $(INCLUDES)
+
+#CFLAGS	= $(WFLAGS) -g -O2 $(INCLUDES)
+
+# 17!!obs
+OBS	=	\
+		indword.o\
+		indutil.o\
+		indSpellChecker.o\
+		indSetupIndChecker.o\
+		indScanStream.o\
+		indscan.o\
+		indrenum.o\
+		indnode.o\
+		indmini.o\
+		indlink.o\
+		indind.o\
+		indGuessList.o\
+		indguess.o\
+		indfront.o\
+		inddeb.o
+
+LIB=	../lib/ind.a
+
+$(LIB):	$(OBS)
+	ar r $@ $(OBS) && @RANLIB@ $@
+
+duplicates:
+	nm *.o | grep -w [Tt] | \
+	while read addr t name; do echo $$name; done | sort | uniq -c | sort -n
+
+includes:
+	includes.sh indConfig.h $(INCLUDES)
+
+# deps -I. -I../textEncoding -I../appUtil -I../include
+######################################## !! sh
+
+indGuessList.o: \
+    indGuessList.c \
+    indConfig.h \
+    indGuessList.h \
+    ../include/appDebugoff.h \
+    ../include/appDebug.h
+
+indScanStream.o: \
+    indScanStream.c \
+    indConfig.h \
+    ../textEncoding/ucdGeneralCategory.h \
+    indScanStream.h \
+    ../appUtil/sioGeneral.h \
+    ind.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+indSetupIndChecker.o: \
+    indSetupIndChecker.c \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/appSystem.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ind.h \
+    ../appUtil/sioGeneral.h
+
+indSpellChecker.o: \
+    indSpellChecker.c \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h
+
+inddeb.o: \
+    inddeb.c \
+    indConfig.h \
+    indlocal.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugoff.h \
+    ../include/appDebug.h
+
+indfront.o: \
+    indfront.c \
+    indConfig.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/uniUtf8.h \
+    indlocal.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+indguess.o: \
+    indguess.c \
+    indConfig.h \
+    indlocal.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/ucd.h \
+    ../include/appDebugoff.h \
+    ../include/appDebug.h
+
+indind.o: \
+    indind.c \
+    indConfig.h \
+    indlocal.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/utilEndian.h
+
+indlink.o: \
+    indlink.c \
+    indConfig.h \
+    indlocal.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+indmini.o: \
+    indmini.c \
+    indConfig.h \
+    indlocal.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+indnode.o: \
+    indnode.c \
+    indConfig.h \
+    ../textEncoding/uniUtf8.h \
+    indlocal.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+indrenum.o: \
+    indrenum.c \
+    indConfig.h \
+    indlocal.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugoff.h \
+    ../include/appDebug.h
+
+indscan.o: \
+    indscan.c \
+    indConfig.h \
+    indlocal.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+indutil.o: \
+    indutil.c \
+    indConfig.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+indword.o: \
+    indword.c \
+    indConfig.h \
+    ind.h \
+    ../appUtil/sioGeneral.h \
+    indSpellChecker.h \
+    indGuessList.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/uniUtf8.h \
+    ../textEncoding/ucdGeneralCategory.h \
+    ../textEncoding/ucd.h \
+    indlocal.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+

@@ -1,0 +1,173 @@
+Ted (2.23) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Stability fixes.
+    - Many-many annoying bugs fixed.
+    - Some steps to support the few missing features such as absolutely 
+      positioned objects and shapes.
+    - Preparations for bidirectional text support
+    - Comply with LSB directory layout.
+    - Conformant deb and rpm packages
+ -- Mark de Does <mark@mdedoes.com>  Mon, 04 Feb 2013 09:00:00 +0100
+
+Ted (2.22) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Thorough brush-up of the internals.
+    - Undu/Redo/Recovery
+    - Many-many annoying bugs fixed.
+    - Some steps to support the few missing features such as absolutely 
+      positioned objects and shapes.
+ -- Mark de Does <mark@mdedoes.com>  Wed, 04 Apr 2012 09:00:00 +0100
+
+Ted (2.21) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Many improvements in the rendering of embedded images.
+    - Removed functionality that is not directly related to word processing 
+      and document formatting. (Email, Fax)
+    - Added GUI functionality that I forgot while moving to GTK.
+    - Can now embed fonts from a true type collection in the printout
+    - Moved more ad-hoc dialogs to the format tool as a preparation for a 
+      better UI
+ -- Mark de Does <mark@mdedoes.com>  Tue, 20 Oct 2009 09:00:00 +0100
+
+Ted (2.20) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Vertical alignment of table cells.
+    - Multi column layout (of sections).
+    - Text background and text borders
+    - Table of Contents
+    - Unicode compliant (So most scripts and fonts are now supported)
+    - Use fontconfig: Removed restrictions on the collection of fonts that 
+      Ted can use; Use Freetype/Xft for anti aliassed text rendering
+    - Can now render nested tabes. (They are not yet supprted in the user 
+      interface)
+  * Versions 2.18 and 2.19 were skipped.
+ -- Mark de Does <mark@mdedoes.com>  Sun, 07 Jun 2009 09:00:00 +0100
+
+Ted (2.17) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Numbered lists finished.
+    - Yet more footnote bugs fixed.
+    - Behaviour of explicit line and page breaks simulates that of MS-Word.
+    - Made a configurable resources mechanism that works without X11 
+      for command line calls.
+    - Improvements in numbered lists functionality: Opened user interface.
+    - Preliminary support for 'shapes': The newer Word figures mechanism. 
+      The Word 97 Drawing Objects are mapped to 'shapes'.
+ -- Mark de Does <mark@mdedoes.com>  Fri, 28 Jan 2005 09:00:00 +0100
+
+Ted (2.16) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Fonts can be embedded in the printout to print on any printer.
+  * Version 2.15 was skipped.
+ -- Mark de Does <mark@mdedoes.com>  Thu, 01 Apr 2004 09:00:00 +0100
+
+Ted (2.14) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Table Headers
+    - Tabs in page headers/footers compatible with MS-Word 2000
+ -- Mark de Does <mark@mdedoes.com>  Sun, 06 Apr 2003 09:00:00 +0100
+
+Ted (2.13) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Options for making much more compact PostScript when a document 
+      is printed.
+    - Support for smallcaps.
+    - Upgraded the pdfmarks to a version that more recent versions of 
+      acroread support.
+ -- Mark de Does <mark@mdedoes.com>  Sat, 15 Mar 2003 09:00:00 +0100
+
+Ted (2.12) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Solid shading of paragraphs and table cells.
+    - Colored table cell borders, Text colors.
+ -- Mark de Does <mark@mdedoes.com>  Sun, 01 Dec 2002 09:00:00 +0100
+
+Ted (2.11) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Footnotes and endnotes.
+    - Detailed manipulation of the tabulator settings with a 'Tabs' tool.
+ -- Mark de Does <mark@mdedoes.com>  Sun, 01 Mar 2002 09:00:00 +0100
+
+Ted (2.10) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Widow/Orphan control.
+    - Keep paragraph on one page, Keep paragraph on same page as next supported.
+    - Better support for sending MIME and HTML mail. Include images in message.
+ -- Mark de Does <mark@mdedoes.com>  Mon, 30 Apr 2001 09:00:00 +0100
+
+Ted (2.9) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Full support for page headers and footers including page numbers.
+    - Command line conversion to html or to plain text.
+    - The improvements in WMF drawing and support for PAGEREF fields make 
+      the pdf files from the printed postscript very similar to the RTF 
+      original.
+ -- Mark de Does <mark@mdedoes.com>  Mon, 31 Jan 2001 09:00:00 +0100
+
+Ted (2.8) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Editing behavior closer to that of Word. E.G. support for Control key 
+      in navigation and selection has been extended.
+    - The spelling packages have been renamed since Ted 2.6 to comply 
+      with naming conventions. If rpm complains about conflicts, please 
+      remove the conflicting old package using the command rpm -e old_package.
+ -- Mark de Does <mark@mdedoes.com>  Tue, 15 Apr 2000 09:00:00 +0100
+
+Ted (2.7) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - A major step toward wysiwyg vertical layout: Pagination is visible 
+      on screen.
+ -- Mark de Does <mark@mdedoes.com>  Fri, 31 Dec 1999 09:00:00 +0100
+
+Ted (2.6) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - The HTML produced is now simpler and syntactically correct.
+ -- Mark de Does <mark@mdedoes.com>  Thu, 30 Sep 1999 09:00:00 +0100
+
+Ted (2.5) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Right aligned and centered text are supported.
+ -- Mark de Does <mark@mdedoes.com>  Sat, 31 Jul 1999 09:00:00 +0100
+
+Ted (2.4) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Little bugs that prevented Ted from working with other than Latin1 
+      fonts removed.
+    - The Ted document has been improved. It is added as an online document.
+ -- Mark de Does <mark@mdedoes.com>  Fri, 21 May 1999 09:00:00 +0100
+
+Ted (2.3) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Printing of tables.
+ -- Mark de Does <mark@mdedoes.com>  Thu, 11 Mar 1999 09:00:00 +0100
+
+Ted (2.2) tbd; urgency=medium
+  * New upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+    - Usability improvements.
+  * Version 2.1 was skipped.
+ -- Mark de Does <mark@mdedoes.com>  Sat, 06 Feb 1999 09:00:00 +0100
+
+Ted (2.0) tbd; urgency=medium
+  * First upstream release.
+    See http://ftp.nluug.nl/pub/editors/ted/announce.html
+ -- Mark de Does <mark@mdedoes.com>  Mon, 09 Nov 1998 09:00:00 +0100
+

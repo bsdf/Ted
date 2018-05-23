@@ -1,0 +1,150 @@
+CC=@CC@
+
+ZLIB_CFLAGS=@ZLIB_CFLAGS@
+PCRE_CFLAGS=@PCRE_CFLAGS@
+
+INCLUDES=			\
+	-I../include		\
+	-I../appUtil		\
+	-I../textEncoding	\
+	-I../utilPs		\
+	-I.
+
+CFLAGS=	@CFLAGS@ 		\
+	$(INCLUDES)
+
+WFLAGS=	-Wall			\
+	-Wextra			\
+	-Winit-self		\
+	-pedantic		\
+	-Wpointer-arith		\
+	-Wno-format-y2k		\
+	-Wstrict-prototypes	\
+	-Wmissing-declarations	\
+	-Wmissing-prototypes	\
+	-Wnested-externs	\
+	-Wuninitialized		\
+	-Wundef			\
+	-Wwrite-strings		\
+	-Wold-style-definition	\
+	-Wno-missing-field-initializers	\
+	-Wredundant-decls	\
+	-Wno-unused-parameter	\
+	-Wno-sign-compare
+
+#CFLAGS	= $(WFLAGS) -g -O2 $(INCLUDES)
+
+# 7!!obs
+OBS	=	\
+		utilMatchFont.o\
+		utilDocFontList.o\
+		utilDocFont.o\
+		docExpandedTextAttribute.o\
+		cssFontFamily.o
+
+
+../lib/docFont.a:	$(OBS)
+	ar ruv $@ $(OBS) && @RANLIB@ $@
+
+#
+#  Check for duplicate symbols
+#
+duplicates:
+	nm *.o | grep -w [Tt] | \
+	while read addr t name; do echo $$name; done | sort | uniq -c | sort -n
+
+includes:
+	includes.sh docFontConfig.h $(INCLUDES)
+
+# deps -I../include -I../textEncoding -I../appUtil -I../utilPs -I.
+################################# !! sh
+
+cssFontFamily.o: \
+    cssFontFamily.c \
+    docFontConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../utilPs/psDocumentFontStyle.h
+
+docExpandedTextAttribute.o: \
+    docExpandedTextAttribute.c \
+    docFontConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/utilPropMask.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    docExpandedTextAttribute.h \
+    utilDocFontList.h \
+    utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/utilColor.h
+
+utilDocFont.o: \
+    utilDocFont.c \
+    docFontConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../utilPs/psDocumentFontStyle.h
+
+utilDocFontList.o: \
+    utilDocFontList.c \
+    docFontConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    utilDocFontList.h \
+    utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../utilPs/psDocumentFontStyle.h
+
+utilMatchFont.o: \
+    utilMatchFont.c \
+    docFontConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../utilPs/psDocumentFontStyle.h \
+    utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/textOfficeCharset.h \
+    utilMatchFont.h \
+    utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h
+

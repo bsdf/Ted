@@ -1,0 +1,82 @@
+i pkginfo=Ted.pkginfo
+i postinstall=sysvpost.sh
+i postremove=sysvpost.sh
+d none share/Ted 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/TedDocument-en_US.rtf 0644 @PKG_OWNER@ @PKG_GROUP@
+
+d none share/Ted/examples 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/examples/rtf2pdf.sh 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/examples/rtf2ps.sh 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/examples/rtf2txt.sh 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/examples/rtf2epub.sh 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/examples/rtf2html.sh 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/examples/gsafm.sh 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/examples/fixOpenOfficeRtf.sh 0755 @PKG_OWNER@ @PKG_GROUP@
+
+d none share/Ted/doc 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/doc/Ted.1 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/doc/rtf2ps.1 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/doc/rtf2pdf.1 0644 @PKG_OWNER@ @PKG_GROUP@
+
+d none share/Ted/ps 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/ps/gsfontmetrics.ps 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/ps/gslibpath.ps 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/ps/gslsfonts.ps 0644 @PKG_OWNER@ @PKG_GROUP@
+
+d none share/Ted/fontsdocs 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/fontsdocs/font.rtf 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/fontsdocs/font-i.rtf 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/fontsdocs/font-b.rtf 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/fontsdocs/font-bi.rtf 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/fontsdocs/checkfontsdocs.sh 0755 @PKG_OWNER@ @PKG_GROUP@
+
+f none share/Ted/Ted.png 0644 @PKG_OWNER@ @PKG_GROUP@
+
+d none share/Ted/afm 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/AvantGarde-Book.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/AvantGarde-BookOblique.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/AvantGarde-Demi.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/AvantGarde-DemiOblique.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Bookman-Demi.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Bookman-DemiItalic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Bookman-Light.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Bookman-LightItalic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Courier.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Courier-Bold.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Courier-BoldOblique.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Courier-Oblique.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Helvetica.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Helvetica-Bold.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Helvetica-BoldOblique.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Helvetica-Narrow.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Helvetica-Narrow-Bold.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Helvetica-Narrow-BoldOblique.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Helvetica-Narrow-Oblique.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Helvetica-Oblique.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/NewCenturySchlbk-Bold.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/NewCenturySchlbk-BoldItalic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/NewCenturySchlbk-Italic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/NewCenturySchlbk-Roman.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Palatino-Bold.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Palatino-BoldItalic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Palatino-Italic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Palatino-Roman.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Symbol.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Times-Bold.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Times-BoldItalic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Times-Italic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/Times-Roman.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/ZapfChancery-MediumItalic.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/afm/ZapfDingbats.afm 0644 @PKG_OWNER@ @PKG_GROUP@
+f none bin/Ted 0755 @PKG_OWNER@ @PKG_GROUP@
+d none share/Ted/dfa 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/dfa/en_US.dfa 0644 @PKG_OWNER@ @PKG_GROUP@
+d none share/Ted/varia 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/varia/Ted.mailcap 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/varia/Ted.desktop 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/varia/base35.fonts.conf 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/varia/base35.rtf 0644 @PKG_OWNER@ @PKG_GROUP@
+d none share/Ted/config 0755 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/config/Ted.properties.sample 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/Ted/config/ted.gtkrc-2.0 0644 @PKG_OWNER@ @PKG_GROUP@
+f none share/applications/Ted.desktop 0644 @PKG_OWNER@ @PKG_GROUP@

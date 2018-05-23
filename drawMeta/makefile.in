@@ -1,0 +1,533 @@
+CC=@CC@
+
+WFLAGS=	-Wall			\
+	-Wextra			\
+	-Winit-self		\
+	-pedantic		\
+	-Wpointer-arith		\
+	-Wno-format-y2k		\
+	-Wstrict-prototypes	\
+	-Wmissing-declarations	\
+	-Wmissing-prototypes	\
+	-Wnested-externs	\
+	-Wuninitialized		\
+	-Wundef			\
+	-Wwrite-strings		\
+	-Wold-style-definition	\
+	-Wno-missing-field-initializers	\
+	-Wredundant-decls	\
+	-Wno-unused-parameter	\
+	-Wno-sign-compare
+
+INCLUDES=			\
+	-I. -I../include	\
+	-I../bitmap		\
+	-I../utilPs		\
+	-I../docFont		\
+	-I../textEncoding	\
+	-I../appUtil
+
+CFLAGS=	\
+	@CFLAGS@		\
+	$(INCLUDES)
+
+#CFLAGS= -g -O2 $(WFLAGS) $(INCLUDES)
+
+# 14!!obs
+OBS	=	\
+		drawWinMetaText.o\
+		drawWinMetaPsFonts.o\
+		drawWinMetaImg.o\
+		drawWinMeta.o\
+		drawPlayWmf.o\
+		drawPlayMacPict.o\
+		drawPlayEmf.o\
+		drawMetafileSvg.o\
+		drawMetafilePsProcs.o\
+		drawMetafilePs.o\
+		drawMetafileImpl.o\
+		drawImageSvg.o
+
+../lib/drawMeta.a:	$(OBS)
+	ar ruv $@ $(OBS) && @RANLIB@ $@
+
+duplicates:
+	nm *.o | grep -w [Tt] | \
+	while read addr t name; do echo $$name; done | sort | uniq -c | sort -n
+
+includes:
+	includes.sh drawMetaConfig.h $(INCLUDES)
+
+# deps -I. -I../include -I../bitmap -I../textEncoding -I../appUtil -I ../docFont -I../utilPs
+######################################## !! sh
+
+drawImageSvg.o: \
+    drawImageSvg.c \
+    drawMetaConfig.h \
+    drawImageSvg.h \
+    ../utilPs/svgWriter.h \
+    ../appUtil/xmlWriter.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilColor.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioBase64.h \
+    ../appUtil/sioMemory.h \
+    ../appUtil/sioHex.h \
+    ../bitmap/bmio.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/sioGeneral.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawMetafileImpl.o: \
+    drawMetafileImpl.c \
+    drawMetaConfig.h \
+    drawMetafileImpl.h \
+    drawWinMetaImpl.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawMetafilePs.o: \
+    drawMetafilePs.c \
+    drawMetaConfig.h \
+    drawMetafileImpl.h \
+    drawWinMetaImpl.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    drawMetafilePs.h \
+    ../utilPs/psPrint.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    ../utilPs/psFace.h \
+    ../utilPs/textAttribute.h \
+    ../utilPs/psNup.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontMetrics.h \
+    ../utilPs/psPrintShape.h \
+    ../utilPs/psShading.h \
+    ../bitmap/bmWmfIo.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmEmfIo.h \
+    ../bitmap/bmEmf.h \
+    ../bitmap/bmBitmapPrinter.h \
+    ../bitmap/bitmap.h \
+    ../bitmap/bmio.h \
+    drawMacPictImpl.h \
+    drawMacPict.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawMetafilePsProcs.o: \
+    drawMetafilePsProcs.c \
+    drawMetaConfig.h \
+    drawMetafilePs.h \
+    ../utilPs/psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    ../utilPs/psFace.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    ../utilPs/psNup.h \
+    ../appUtil/utilColor.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    drawMetafile.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/textAttribute.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawMetafileSvg.o: \
+    drawMetafileSvg.c \
+    drawMetaConfig.h \
+    drawMetafileImpl.h \
+    drawWinMetaImpl.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    drawMetafileSvg.h \
+    ../utilPs/svgWriter.h \
+    ../appUtil/xmlWriter.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/psFontMetrics.h \
+    ../bitmap/bmWmfIo.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmEmfIo.h \
+    ../bitmap/bmEmf.h \
+    drawMacPictImpl.h \
+    drawMacPict.h \
+    drawImageSvg.h \
+    ../utilPs/psShading.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawPlayEmf.o: \
+    drawPlayEmf.c \
+    drawMetaConfig.h \
+    drawWinMetaImpl.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    ../bitmap/bmEmfIo.h \
+    ../bitmap/bmEmf.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/sioGeneral.h \
+    ../textEncoding/uniUtf8.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawPlayMacPict.o: \
+    drawPlayMacPict.c \
+    drawMetaConfig.h \
+    drawWinMetaImpl.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    drawMacPictImpl.h \
+    drawMacPict.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/sioGeneral.h \
+    ../textEncoding/uniLegacyEncoding.h \
+    ../textEncoding/uniUtf8.h \
+    ../utilPs/psDocumentFontStyle.h \
+    ../bitmap/bmio.h \
+    ../bitmap/bitmap.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawPlayWmf.o: \
+    drawPlayWmf.c \
+    drawMetaConfig.h \
+    drawWinMetaImpl.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmfIo.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmio.h \
+    ../bitmap/bitmap.h \
+    ../textEncoding/uniUtf8.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawWinMeta.o: \
+    drawWinMeta.c \
+    drawMetaConfig.h \
+    drawWinMetaImpl.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/sioGeneral.h \
+    ../utilPs/psDocumentFontStyle.h \
+    ../appUtil/geoUnits.h \
+    ../bitmap/bmio.h \
+    ../bitmap/bitmap.h \
+    ../textEncoding/textConverter.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawWinMetaImg.o: \
+    drawWinMetaImg.c \
+    drawMetaConfig.h \
+    drawMetafile.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/sioGeneral.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawWinMetaImpl.h \
+    ../docFont/utilDocFont.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/sioGeneral.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawWinMetaPsFonts.o: \
+    drawWinMetaPsFonts.c \
+    drawMetaConfig.h \
+    drawMetafilePsList.h \
+    ../utilPs/psFace.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/sioGeneral.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/textAttribute.h \
+    drawWinMetaImpl.h \
+    ../docFont/utilDocFont.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../bitmap/bmWmfIo.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmEmfIo.h \
+    ../bitmap/bmEmf.h \
+    drawMacPictImpl.h \
+    drawMacPict.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+drawWinMetaText.o: \
+    drawWinMetaText.c \
+    drawMetaConfig.h \
+    drawWinMetaImpl.h \
+    ../bitmap/bitmap.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilPalette.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../docFont/utilDocFont.h \
+    ../utilPs/psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../textEncoding/textOfficeCharset.h \
+    ../appUtil/sioGeneral.h \
+    ../bitmap/bmWmf.h \
+    ../bitmap/bmcolor.h \
+    ../textEncoding/textConverterImpl.h \
+    ../appUtil/geoAffineTransform.h \
+    ../docFont/utilDocFontList.h \
+    ../docFont/utilDocFont.h \
+    ../docFont/utilMatchFont.h \
+    ../docFont/utilDocFontList.h \
+    ../utilPs/psPostScriptFontList.h \
+    ../utilPs/psFontFamily.h \
+    ../utilPs/psFontInfo.h \
+    ../utilPs/textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    drawMetafile.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/sioGeneral.h \
+    ../textEncoding/uniUtf8.h \
+    ../textEncoding/textConverter.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+

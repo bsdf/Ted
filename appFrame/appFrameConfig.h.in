@@ -1,0 +1,57 @@
+#   ifndef		APP_FRAME_CONFIG_H
+#   define		APP_FRAME_CONFIG_H
+
+#   include		<appUtilConfig.h>
+
+#undef HAVE_MKSTEMP
+
+#undef HAVE_FT2
+#undef HAVE_XFT
+#undef HAVE_FONTCONFIG
+
+#undef USE_XFT
+#undef USE_FONTCONFIG
+
+/************************************************************************/
+/*									*/
+/*  Locations of application related files				*/
+/*									*/
+/*  AFMDIR:	Location of the font files: something.afm files and the	*/
+/*		optional PostScript to X11 font translation table.	*/
+/*  INDDIR:	Location of the spell check dictionaries.		*/
+/*									*/
+/************************************************************************/
+
+#   undef	DATADIR
+
+#   ifdef	DATADIR
+#	define	PKGDIR	DATADIR
+#   endif
+
+#   ifndef	PKGDIR
+#	define	PKGDIR	"/usr/share"
+#   endif
+
+#   ifndef	AFMDIR
+#	define	AFMDIR	PKGDIR "/Ted/afm"
+#   endif
+
+#   ifndef 	INDDIR
+#	define	INDDIR	PKGDIR "/Ted/dfa"
+#   endif
+
+#   ifndef 	CONFDIR
+#	define	CONFDIR	PKGDIR "/Ted/config"
+#   endif
+
+/************************************************************************/
+/*									*/
+/*  Choose a GUI. (only one!)						*/
+/*									*/
+/************************************************************************/
+
+#   undef	USE_MOTIF
+#   undef	USE_GTK
+#   undef	USE_QT
+
+#   endif	/*	APP_FRAME_CONFIG_H	*/

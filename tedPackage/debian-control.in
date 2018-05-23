@@ -1,0 +1,17 @@
+Package: ted
+Section: text
+Priority: optional
+Maintainer: Mark de Does <mark@mdedoes.com>
+Architecture: @ARCH@
+Version: 2.23
+Installed-Size: @INSTSIZE@
+Depends: zlib1g, libpcre3, libx11-6, libxpm4, libjpeg8, libtiff4, libpng12-0, libgtk2.0-0, libpaper1
+Build-Depends: build-essential, zlib1g-dev, libpcre3-dev, libx11-dev, libxpm-dev, libjpeg8-dev, libtiff4-dev, libpng12-dev, libgtk2.0-dev, libpaper-dev lintian fakeroot
+XS-Motif-Build-Depends: build-essential, zlib1g-dev, libpcre3-dev, libx11-dev, libxpm-dev, libjpeg8-dev, libtiff4-dev, libpng12-dev, libfontconfig1-dev, libfreetype6-dev, libxrender-dev, libexpat1-dev, libxft-dev, libxp-dev, libxmu-dev, libmotif-dev libxt6-dev, libpaper-dev
+XB-Motif-Depends: zlib1g, libpcre3, libx11-6, libxpm4, libjpeg8, libtiff4, libpng12-0, libxft2, libxt6, libxp6, libxmu6, libmotif4, libpaper1
+Pre-Depends: libc6 (>= 2.0.105)
+Provides: ted
+Description: Easy rich text processor.
+ Ted can edit RTF files in a wysiwyg manner. It supports multiple fonts
+ and can print to PostScript printers. Additionally Ted is an rtf2ps, rtf2pdf,
+ rtf2html and an rtf2epub converter.

@@ -1,0 +1,670 @@
+CC=@CC@
+
+INCLUDES=			\
+	-I../include		\
+	-I../appUtil		\
+	-I../textEncoding	\
+	-I.
+
+CFLAGS=	@CFLAGS@ 	\
+	$(INCLUDES)
+
+WFLAGS=	-Wall			\
+	-Wextra			\
+	-Winit-self		\
+	-pedantic		\
+	-Wpointer-arith		\
+	-Wno-format-y2k		\
+	-Wstrict-prototypes	\
+	-Wmissing-declarations	\
+	-Wmissing-prototypes	\
+	-Wnested-externs	\
+	-Wuninitialized		\
+	-Wundef			\
+	-Wwrite-strings		\
+	-Wold-style-definition	\
+	-Wno-missing-field-initializers	\
+	-Wredundant-decls	\
+	-Wno-unused-parameter	\
+	-Wno-sign-compare
+
+#CFLAGS	= $(WFLAGS) -g -O2 $(INCLUDES)
+
+# 36!!obs
+OBS	=	\
+		textAttributeUtil.o\
+		textAttribute.o\
+		textAttributeAdmin.o\
+		svgWriter.o\
+		psTtfTableEntry.o\
+		psTtfNameTable.o\
+		psTtfFontInfo.o\
+		psTtf.o\
+		psT42.o\
+		psShading.o\
+		psReadAfm.o\
+		psPrintShape.o\
+		psPrintProcs.o\
+		psPrintPdf.o\
+		psPrint.o\
+		psPpd.o\
+		psPostScriptFontList.o\
+		psPdfmark.o\
+		psNup.o\
+		psMatchFont.o\
+		psIncludeEps.o\
+		psGlyphs.o\
+		psFontName.o\
+		psFontMetrics.o\
+		psFontInfo.o\
+		psFontFamily.o\
+		psFontCatalog.o\
+		psFace.o\
+		psDsc.o\
+		psDocumentFonts.o\
+		psCompareFontInfo.o\
+		psBuildConfig.o\
+		psBase35.o\
+		psAfm.o
+
+
+../lib/utilPs.a:	$(OBS)
+	ar ruv $@ $(OBS) && @RANLIB@ $@
+
+#
+#  Check for duplicate symbols
+#
+duplicates:
+	nm *.o | grep -w [Tt] | \
+	while read addr t name; do echo $$name; done | sort | uniq -c | sort -n
+
+includes:
+	includes.sh utilPsConfig.h $(INCLUDES)
+
+# deps -I../include -I../appUtil -I../textEncoding -I.
+################################# !! sh
+
+psAfm.o: \
+    psAfm.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../appUtil/sioGeneral.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psReadWriteFontInfo.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psBase35.o: \
+    psBase35.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psBuildConfig.o: \
+    psBuildConfig.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../appUtil/reg.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/sioPfb.h \
+    ../appUtil/sioPipe.h \
+    ../appUtil/appSystem.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/utilMemoryBufferPrintf.h \
+    psTtf.h \
+    ../appUtil/sioGeneral.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    psBuildConfigFiles.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    psReadWriteFontInfo.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psCompareFontInfo.o: \
+    psCompareFontInfo.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psCompareFontInfo.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psDocumentFonts.o: \
+    psDocumentFonts.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    psFace.h \
+    psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    psNup.h \
+    ../appUtil/utilColor.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    psGlyphs.h \
+    ../appUtil/utilTree.h \
+    ../appUtil/utilFontmap.h \
+    ../appUtil/appSystem.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/sioPfb.h \
+    psTtf.h \
+    ../textEncoding/ucdGeneralCategory.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psDsc.o: \
+    psDsc.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    psFace.h \
+    psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    psNup.h \
+    ../appUtil/utilColor.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psFace.o: \
+    psFace.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../appUtil/utilTree.h \
+    psFace.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    psGlyphs.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psFontCatalog.o: \
+    psFontCatalog.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psReadWriteFontInfo.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/appSystem.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psFontFamily.o: \
+    psFontFamily.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psFontFamily.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psCompareFontInfo.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psFontInfo.o: \
+    psFontInfo.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psGlyphs.h \
+    ../appUtil/utilTree.h \
+    ../textEncoding/uniAlternatives.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psFontMetrics.o: \
+    psFontMetrics.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psFontMetrics.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../textEncoding/uniUtf8.h \
+    ../textEncoding/ucdGeneralCategory.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psFontName.o: \
+    psFontName.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    psFontName.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h
+
+psGlyphs.o: \
+    psGlyphs.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psGlyphs.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psIncludeEps.o: \
+    psIncludeEps.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    psFace.h \
+    psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    psNup.h \
+    ../appUtil/utilColor.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioGeneral.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psMatchFont.o: \
+    psMatchFont.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    psFontFamily.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psDocumentFontStyle.h \
+    psPostScriptFontList.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    psMatchFont.h
+
+psNup.o: \
+    psNup.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psNup.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/geoAffineTransform.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psPdfmark.o: \
+    psPdfmark.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    psFace.h \
+    psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    psNup.h \
+    ../appUtil/utilColor.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psPostScriptFontList.o: \
+    psPostScriptFontList.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psCompareFontInfo.h \
+    psFontName.h \
+    ../appUtil/utilTree.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psPpd.o: \
+    psPpd.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPpd.h \
+    ../appUtil/sioFileio.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioGeneral.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psPrint.o: \
+    psPrint.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    psFace.h \
+    psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    psNup.h \
+    ../appUtil/utilColor.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    ../textEncoding/uniUtf8.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psPrintPdf.o: \
+    psPrintPdf.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../appUtil/utilMemoryBufferPrintf.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    psFace.h \
+    psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    psNup.h \
+    ../appUtil/utilColor.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psPrintProcs.o: \
+    psPrintProcs.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPrint.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilDocumentGeometry.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geo2DInteger.h \
+    psFace.h \
+    psFontInfo.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoAffineTransform.h \
+    psNup.h \
+    ../appUtil/utilColor.h \
+    psPostScriptFontList.h \
+    psFontFamily.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psPrintShape.o: \
+    psPrintShape.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psPrintShape.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/geo2DInteger.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psReadAfm.o: \
+    psReadAfm.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../appUtil/sioGeneral.h \
+    psFontName.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psReadWriteFontInfo.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psShading.o: \
+    psShading.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    psShading.h
+
+psT42.o: \
+    psT42.c \
+    ../appUtil/sioHex.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psTtf.h \
+    ../appUtil/sioGeneral.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    psReadWriteFontInfo.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    psTtfIntern.h \
+    psTtfTableEntry.h \
+    psTtfNameTable.h
+
+psTtf.o: \
+    psTtf.c \
+    ../appUtil/sioMemory.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/utilEndian.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/utilIndexMapping.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    psTtfIntern.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    psTtfTableEntry.h \
+    ../appUtil/sioGeneral.h \
+    psTtfNameTable.h
+
+psTtfFontInfo.o: \
+    psTtfFontInfo.c \
+    ../appUtil/utilEndian.h \
+    ../appUtil/utilMemoryBuffer.h \
+    psFontName.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    psGlyphs.h \
+    psTtf.h \
+    ../appUtil/sioGeneral.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    psTtfIntern.h \
+    psTtfTableEntry.h \
+    psTtfNameTable.h
+
+psTtfNameTable.o: \
+    psTtfNameTable.c \
+    ../textEncoding/uniUtf8.h \
+    psTtfNameTable.h \
+    ../appUtil/sioGeneral.h \
+    psTtfTableEntry.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/utilEndian.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/sioGeneral.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+psTtfTableEntry.o: \
+    psTtfTableEntry.c \
+    psTtfTableEntry.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/sioEndian.h \
+    ../appUtil/sioGeneral.h
+
+svgWriter.o: \
+    svgWriter.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../appUtil/sioGeneral.h \
+    svgWriter.h \
+    ../appUtil/xmlWriter.h \
+    ../appUtil/sioGeneral.h \
+    ../appUtil/utilColor.h \
+    ../appUtil/utilMemoryBuffer.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilColor.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h
+
+textAttribute.o: \
+    textAttribute.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    ../appUtil/utilPropMask.h \
+    textAttribute.h
+
+textAttributeAdmin.o: \
+    textAttributeAdmin.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    ../include/appDebugon.h \
+    ../include/appDebug.h \
+    textAttributeAdmin.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/utilNumberedPropertiesAdmin.h \
+    ../appUtil/utilIntegerValueNode.h \
+    ../appUtil/utilPagedList.h \
+    ../appUtil/utilIndexSet.h
+
+textAttributeUtil.o: \
+    textAttributeUtil.c \
+    utilPsConfig.h \
+    ../appUtil/appUtilConfig.h \
+    textAttributeUtil.h \
+    textAttribute.h \
+    ../appUtil/utilPropMask.h \
+    ../appUtil/geoGrid.h \
+    psFontInfo.h \
+    ../appUtil/geo2DInteger.h \
+    ../appUtil/utilIndexSet.h \
+    ../appUtil/utilIndexMapping.h \
+    ../appUtil/utilMemoryBuffer.h
+
